@@ -180,7 +180,7 @@ address {
 .display {
   font-family: var(--font-display);
   font-weight: 600;
-  line-height: 1.05;
+  line-height: 1.12;
   letter-spacing: -0.03em;
   color: var(--navy-900);
 }
