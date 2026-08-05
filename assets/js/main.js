@@ -158,6 +158,7 @@
       '<div class="topbar__meta">' +
       "<span>Port St. Lucie &amp; The Treasure Coast</span>" +
       "<span>License #CAC1820289</span>" +
+      '<span style="color:#f08c42;font-weight:700">★ Veteran-Owned</span>' +
       '<a href="emergency.html" style="color:#f08c42;font-weight:700">24/7 Emergency</a>' +
       "</div>" +
       '<a class="topbar__phone" href="' +
@@ -171,7 +172,7 @@
       '<img src="' +
       LOGO +
       '" alt="Kuebler Mechanical" width="190" height="48" />' +
-      '<span class="brand__tag">Veteran-Led HVAC</span>' +
+      '<span class="brand__tag">Veteran-Owned HVAC</span>' +
       "</a>" +
       '<nav class="nav__links" aria-label="Primary">' +
       links +
@@ -211,7 +212,7 @@
       '<img src="' +
       LOGO +
       '" alt="Kuebler Mechanical" width="170" height="44" />' +
-      "<p>Premium residential &amp; commercial HVAC for Port St. Lucie and the Treasure Coast. Licensed, bonded, veteran-led.</p>" +
+      "<p>Premium residential &amp; commercial HVAC for Port St. Lucie and the Treasure Coast. Licensed, bonded, veteran-owned—American craftsmanship you can call at 2AM.</p>" +
       '<p class="mt-4"><strong style="color:#fff">License #CAC1820289</strong></p>' +
       "</div>" +
       '<div><h4>Services</h4><div class="footer-links">' +
@@ -347,6 +348,72 @@
     nodes.forEach(function (n) {
       io.observe(n);
     });
+  }
+
+  function prefersReducedMotion() {
+    return (
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    );
+  }
+
+  function bindCinematicHero() {
+    var hero = document.querySelector(".hero--cinematic");
+    if (!hero) return;
+    requestAnimationFrame(function () {
+      hero.classList.add("is-ready");
+    });
+    if (prefersReducedMotion()) return;
+
+    var media = hero.querySelector(".hero__media img");
+    var shade = hero.querySelector(".hero__shade");
+    if (!media) return;
+
+    var ticking = false;
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        var rect = hero.getBoundingClientRect();
+        var h = hero.offsetHeight || 1;
+        var progress = Math.min(1, Math.max(0, -rect.top / h));
+        var y = progress * 48;
+        var scale = 1.08 + progress * 0.06;
+        media.style.transform =
+          "translate3d(0," + y + "px,0) scale(" + scale + ")";
+        if (shade) {
+          shade.style.opacity = String(0.95 + progress * 0.05);
+        }
+        ticking = false;
+      });
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
+
+  function bindQuoteBeat() {
+    var beat = document.querySelector("[data-quote-beat]");
+    if (!beat) return;
+    if (prefersReducedMotion()) {
+      beat.classList.add("is-in");
+      return;
+    }
+    if (!("IntersectionObserver" in window)) {
+      beat.classList.add("is-in");
+      return;
+    }
+    var io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            beat.classList.add("is-in");
+            io.unobserve(beat);
+          }
+        });
+      },
+      { threshold: 0.2, rootMargin: "0px 0px -10% 0px" },
+    );
+    io.observe(beat);
   }
 
   function bindTabs() {
@@ -710,6 +777,8 @@
     mountChrome();
     bindHeader();
     bindReveal();
+    bindCinematicHero();
+    bindQuoteBeat();
     bindTabs();
     bindForms();
     bindCountdowns();

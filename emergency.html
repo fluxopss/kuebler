@@ -19,17 +19,24 @@
   <body>
     <div id="site-header"></div>
     <main id="main">
-      <header class="page-hero">
+      <header class="page-hero page-hero--emergency">
         <div class="container page-hero__grid">
           <div>
-            <p class="eyebrow" style="color: #f08c42">24/7 emergency</p>
+            <p class="honor-mark">24/7 · Treasure Coast dispatch</p>
             <h1 class="display display--xl">
               AC down in Florida heat? Call now—don’t wait for a form.
             </h1>
             <p class="lede">
               Office hours Mon–Fri 7:30AM–4:00PM. Emergency service available
               around the clock. NATE-certified techs. Fully stocked vans.
+              Veteran-led response when comfort fails.
             </p>
+            <div class="btn-row mt-6">
+              <a class="btn btn--primary" href="tel:+17728782281"
+                >Call (772) 878-2281</a
+              >
+              <a class="btn btn--ghost" href="#callback">Request callback</a>
+            </div>
           </div>
         </div>
       </header>
@@ -49,12 +56,12 @@
             <p class="eyebrow">Symptom triage</p>
             <h2 class="display display--lg">What’s happening right now?</h2>
           </div>
-          <div class="grid-2">
+          <div class="grid-2 reveal-stagger">
             <article class="symptom reveal">
               <h3>No cool air / blowing hot</h3>
               <p>Call immediately—especially with outdoor temps climbing.</p>
             </article>
-            <article class="symptom reveal reveal-delay-1">
+            <article class="symptom reveal">
               <h3>Frozen coil</h3>
               <p>
                 Needs prompt attention to help prevent the unit from seizing.
@@ -64,7 +71,7 @@
               <h3>Water leak / puddle</h3>
               <p>Condensate or refrigerant issues can damage floors fast.</p>
             </article>
-            <article class="symptom reveal reveal-delay-1">
+            <article class="symptom reveal">
               <h3>Burning smell / loud bang</h3>
               <p>Shut down safely if needed and call for emergency service.</p>
             </article>
@@ -72,7 +79,7 @@
         </div>
       </section>
 
-      <section class="section section--surface">
+      <section class="section section--surface" id="callback">
         <div class="container grid-2">
           <div class="reveal">
             <p class="eyebrow">Repair vs replace</p>

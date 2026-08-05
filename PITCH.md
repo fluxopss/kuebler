@@ -8,18 +8,18 @@
 
 ## Side-by-side
 
-| Moment            | Optic (live WP / Salient)                      | Flux Labs demo                                                                                |
-| ----------------- | ---------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| First 5 seconds   | Promo slider + buried trust                    | Split hero + mini quote form + trust ribbon (stars, Google Guarantee, NATE, Veteran, license) |
-| Coupons           | Print plugin pages                             | Countdown to 09/30/2026 + Print + **Text me this offer** + comparison table                   |
-| Forms             | Gravity + **reCAPTCHA** on every submit        | Honeypot only · multi-step replacement wizard · GHL-ready story                               |
-| Mobile            | Sticky call only                               | **Call · Text · Book** dock + review pill                                                     |
-| Gallery           | Image 1 of N carousels                         | Lightbox + **named case studies** (Taco Bell, Stormhouse, etc.)                               |
-| Areas             | City list dump                                 | Interactive pin map + full city groups                                                        |
-| Content footprint | FAQ / blog / videos exist but template-feeling | Dedicated FAQ (search + schema), Videos, Blog filters, Careers, Financing                     |
-| Brand ownership   | Footer **POWERED BY Optic Marketing**          | Flux Demo badge only · client owns the brand                                                  |
-| Accessibility     | UserWay overlay                                | Native semantic HTML, skip link, reduced-motion                                               |
-| Leads             | Agency / email black box                       | Pitch: **your GHL pipeline**, tagged by intent                                                |
+| Moment            | Optic (live WP / Salient)                      | Flux Labs demo                                                                         |
+| ----------------- | ---------------------------------------------- | -------------------------------------------------------------------------------------- |
+| First 5 seconds   | Promo slider + buried trust                    | Cinematic full-bleed hero · brand-level knight · quote form as beat two · honor stripe |
+| Coupons           | Print plugin pages                             | Countdown to 09/30/2026 + Print + **Text me this offer** + comparison table            |
+| Forms             | Gravity + **reCAPTCHA** on every submit        | Honeypot only · multi-step replacement wizard · GHL-ready story                        |
+| Mobile            | Sticky call only                               | **Call · Text · Book** dock + review pill                                              |
+| Gallery           | Image 1 of N carousels                         | Lightbox + **named case studies** (Taco Bell, Stormhouse, etc.)                        |
+| Areas             | City list dump                                 | Interactive pin map + full city groups                                                 |
+| Content footprint | FAQ / blog / videos exist but template-feeling | Dedicated FAQ (search + schema), Videos, Blog filters, Careers, Financing              |
+| Brand ownership   | Footer **POWERED BY Optic Marketing**          | Flux Demo badge only · client owns the brand                                           |
+| Accessibility     | UserWay overlay                                | Native semantic HTML, skip link, reduced-motion                                        |
+| Leads             | Agency / email black box                       | Pitch: **your GHL pipeline**, tagged by intent                                         |
 
 ---
 

@@ -22,13 +22,16 @@
       <header class="page-hero">
         <div class="container page-hero__grid">
           <div>
+            <div class="honor-stripe" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </div>
             <p class="eyebrow" style="color: #f08c42">Live promotions</p>
             <h1 class="display display--xl">
               Specials with urgency—print, text, or call.
             </h1>
             <p class="lede">
               All six offers published on kueblermechanical.com. Countdown to
-              expiry. Print-ready coupons that beat the WordPress plugin look.
+              expiry. Print-ready coupons—including 10% off for veterans.
             </p>
             <div
               class="countdown mt-4"
@@ -152,27 +155,38 @@
               </div>
             </article>
 
-            <article class="offer-card reveal reveal-delay-1" id="veterans">
-              <div class="countdown mb-4" data-countdown></div>
-              <div class="offer-card__price">10%</div>
-              <h3>Off for Veterans</h3>
-              <ul>
-                <li>Good on repairs</li>
-                <li>Good on new equipment installations</li>
-                <li>Cannot be used on tune-ups</li>
-              </ul>
-              <p class="offer-card__note">
-                Call for details. Expires 09/30/2026.
-              </p>
-              <div class="offer-actions">
-                <a class="btn btn--outline" href="tel:+17728782281">Call</a>
+            <article
+              class="offer-card offer-card--veteran reveal"
+              id="veterans"
+            >
+              <div>
+                <div class="countdown mb-4" data-countdown></div>
+                <div class="offer-card__price">10%</div>
+              </div>
+              <div>
+                <p class="honor-mark" style="margin-bottom: 0.5rem">
+                  Thank you for your service
+                </p>
+                <h3>Off for Veterans</h3>
+                <ul>
+                  <li>Good on repairs</li>
+                  <li>Good on new equipment installations</li>
+                  <li>Cannot be used on tune-ups</li>
+                </ul>
+                <p class="offer-card__note">
+                  Call for details. Expires 09/30/2026. From one veteran-owned
+                  company to those who served.
+                </p>
+              </div>
+              <div class="offer-actions" style="flex-direction: column">
+                <a class="btn btn--primary" href="tel:+17728782281">Call</a>
                 <a
-                  class="btn btn--outline"
+                  class="btn btn--ghost"
                   href="coupon-print.html?offer=veterans"
                   >Print</a
                 >
                 <a
-                  class="btn btn--outline"
+                  class="btn btn--ghost"
                   href="sms:+17728782281?&body=Hi%20Kuebler%20%E2%80%94%20please%20text%20me%20details%20on%20the%20Veteran%2010%25%20offer."
                   >Text me</a
                 >

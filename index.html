@@ -53,7 +53,7 @@
     <div id="site-header"></div>
 
     <main id="main">
-      <section class="hero hero--split" aria-label="Hero">
+      <section class="hero hero--cinematic" aria-label="Hero">
         <div class="hero__media">
           <img
             src="assets/img/hero-marina.jpg"
@@ -65,187 +65,203 @@
         </div>
         <div class="hero__shade"></div>
         <div class="hero__inner">
-          <div>
-            <p class="eyebrow" style="color: #f08c42">
-              Kuebler Mechanical · Port St. Lucie
-            </p>
+          <div class="hero__brand">
+            <img
+              src="assets/img/knight.svg"
+              alt=""
+              width="88"
+              height="88"
+              aria-hidden="true"
+            />
+            <div class="hero__brand-text">
+              <span class="hero__brand-name">Kuebler Mechanical</span>
+              <span class="hero__brand-meta"
+                >Veteran-Owned · Port St. Lucie</span
+              >
+            </div>
+          </div>
+          <div class="hero__copy">
             <h1 class="display display--xl">
               Comfort protected. Systems that perform.
             </h1>
             <p class="lede">
-              Veteran-led HVAC for homes and businesses across Port St. Lucie
-              and the Treasure Coast—emergency repair, precision replacement,
-              and maintenance that keeps Florida cooling reliable.
+              Marine-led HVAC for homes and businesses across the Treasure
+              Coast—emergency repair, precision replacement, maintenance that
+              holds in Florida heat.
             </p>
             <div class="btn-row">
               <a class="btn btn--primary" href="tel:+17728782281"
                 >Call (772) 878-2281</a
               >
-              <a class="btn btn--ghost" href="specials.html#tuneup"
-                >Get $129 Tune-Up</a
-              >
-              <a
-                class="btn btn--ghost"
-                href="sms:+17728782281?&body=Hi%20Kuebler%20Mechanical%20%E2%80%94%20I%20need%20HVAC%20help%20in%20Port%20St.%20Lucie."
-                >Text Us</a
-              >
-            </div>
-            <div class="hero__trust">
-              <span class="chip">24/7 Emergency</span>
-              <span class="chip">License #CAC1820289</span>
-              <span class="chip">Veteran-Owned</span>
-              <span class="chip">No CAPTCHA quotes</span>
+              <a class="btn btn--ghost" href="#quote">Get a free quote</a>
             </div>
           </div>
-          <div class="hero-panel">
-            <h2>Get a free quote</h2>
-            <p
-              class="text-muted"
-              style="font-size: 0.9rem; margin-bottom: 0.85rem"
-            >
-              Three fields. Urgent? Call instead.
-            </p>
-            <form data-demo-form>
-              <div class="form-success" role="status">
-                Received. In production this hits your GHL pipeline in under 60
-                seconds—no CAPTCHA, tagged by intent.
+        </div>
+        <div class="hero__scroll" aria-hidden="true">
+          <span>Scroll</span>
+          <span class="hero__scroll-line"></span>
+        </div>
+      </section>
+
+      <section
+        class="quote-beat"
+        id="quote"
+        data-quote-beat
+        aria-label="Request a quote"
+      >
+        <div class="container">
+          <div class="quote-beat__panel">
+            <div class="quote-beat__intro">
+              <div class="honor-stripe" aria-hidden="true">
+                <span></span><span></span><span></span>
               </div>
-              <label class="honeypot" aria-hidden="true"
-                >Company website<input
-                  type="text"
-                  name="company_website"
-                  tabindex="-1"
-                  autocomplete="off"
-              /></label>
-              <div class="form-grid" style="grid-template-columns: 1fr">
-                <div class="field">
-                  <label for="hero-name">Name</label>
-                  <input
-                    id="hero-name"
-                    name="name"
-                    required
-                    autocomplete="name"
-                  />
-                </div>
-                <div class="field">
-                  <label for="hero-phone">Phone</label>
-                  <input
-                    id="hero-phone"
-                    name="phone"
-                    type="tel"
-                    required
-                    autocomplete="tel"
-                  />
-                </div>
-                <div class="field">
-                  <label for="hero-need">What do you need?</label>
-                  <select id="hero-need" name="need" required>
-                    <option value="">Select</option>
-                    <option>Emergency Repair</option>
-                    <option>New System Quote</option>
-                    <option>Schedule Maintenance</option>
-                    <option>Indoor Air Quality</option>
-                    <option>Other</option>
-                  </select>
-                </div>
-              </div>
-              <button
-                class="btn btn--primary mt-4"
-                type="submit"
-                style="width: 100%"
-              >
-                Request callback
-              </button>
-              <p class="form-note">
-                Demo form — production wires to GoHighLevel. For real service
-                call (772) 878-2281.
+              <p class="honor-mark">USMC · SDVOSB · License CAC1820289</p>
+              <h2>Get a free quote—three fields, no CAPTCHA.</h2>
+              <p>
+                Urgent cooling failure? Call now. For planned work, tell us what
+                you need and we’ll call you back. Leads route to your
+                GoHighLevel pipeline in production.
               </p>
-            </form>
+              <div class="quote-beat__honor">
+                <img
+                  src="assets/img/badge-veteran-cert.png"
+                  alt="Veteran-Owned Certified"
+                  height="48"
+                />
+                <img
+                  src="assets/img/badge-sdvosb.png"
+                  alt="SDVOSB CVE"
+                  height="48"
+                />
+                <img src="assets/img/nate.png" alt="NATE" height="40" />
+                <img
+                  class="badge--wide"
+                  src="assets/img/google-guarantee.svg"
+                  alt="Google Guaranteed"
+                  height="28"
+                />
+              </div>
+            </div>
+            <div class="quote-beat__form">
+              <h3>Request callback</h3>
+              <p
+                class="text-muted"
+                style="font-size: 0.9rem; margin-bottom: 0.85rem"
+              >
+                Three fields. Urgent? Call instead.
+              </p>
+              <form data-demo-form>
+                <div class="form-success" role="status">
+                  Received. In production this hits your GHL pipeline in under
+                  60 seconds—no CAPTCHA, tagged by intent.
+                </div>
+                <label class="honeypot" aria-hidden="true"
+                  >Company website<input
+                    type="text"
+                    name="company_website"
+                    tabindex="-1"
+                    autocomplete="off"
+                /></label>
+                <div class="form-grid" style="grid-template-columns: 1fr">
+                  <div class="field">
+                    <label for="hero-name">Name</label>
+                    <input
+                      id="hero-name"
+                      name="name"
+                      required
+                      autocomplete="name"
+                    />
+                  </div>
+                  <div class="field">
+                    <label for="hero-phone">Phone</label>
+                    <input
+                      id="hero-phone"
+                      name="phone"
+                      type="tel"
+                      required
+                      autocomplete="tel"
+                    />
+                  </div>
+                  <div class="field">
+                    <label for="hero-need">What do you need?</label>
+                    <select id="hero-need" name="need" required>
+                      <option value="">Select</option>
+                      <option>Emergency Repair</option>
+                      <option>New System Quote</option>
+                      <option>Schedule Maintenance</option>
+                      <option>Indoor Air Quality</option>
+                      <option>Other</option>
+                    </select>
+                  </div>
+                </div>
+                <button
+                  class="btn btn--primary mt-4"
+                  type="submit"
+                  style="width: 100%"
+                >
+                  Request callback
+                </button>
+                <p class="form-note">
+                  Demo form — production wires to GoHighLevel. For real service
+                  call (772) 878-2281.
+                </p>
+              </form>
+            </div>
+          </div>
+          <div class="trust-ribbon reveal">
+            <div class="trust-ribbon__stars">
+              <span>★★★★★</span> Excellent ·
+              <strong data-count="30">30</strong> Google reviews
+            </div>
+            <div class="trust-ribbon__badges">
+              <span class="chip chip--solid">CAC1820289</span>
+              <span class="chip chip--light">24/7 Emergency</span>
+              <span class="chip chip--light">Free Estimates</span>
+            </div>
           </div>
         </div>
       </section>
 
-      <div class="container">
-        <div class="trust-ribbon reveal">
-          <div class="trust-ribbon__stars">
-            <span>★★★★★</span> Excellent ·
-            <strong data-count="30">30</strong> Google reviews
-          </div>
-          <div class="trust-ribbon__badges">
-            <img
-              class="badge--wide"
-              src="assets/img/google-guarantee.svg"
-              alt="Google Guaranteed"
-              height="28"
-            />
-            <img src="assets/img/nate.png" alt="NATE" height="36" />
-            <img src="assets/img/veteran.png" alt="Veteran-Owned" height="36" />
-            <span class="chip chip--solid">CAC1820289</span>
-            <span class="chip chip--light">24/7</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="container" style="margin-top: 1.5rem">
-        <div class="trust-strip reveal">
-          <div class="trust-card">
-            <strong>Free Estimates</strong><span>New equipment quotes</span>
-          </div>
-          <div class="trust-card">
-            <strong>24/7 Response</strong><span>Emergency service ready</span>
-          </div>
-          <div class="trust-card">
-            <strong>Financing</strong
-            ><span>Promotional options via Synchrony</span>
-          </div>
-          <div class="trust-card">
-            <strong>Licensed &amp; Bonded</strong><span>CAC1820289</span>
-          </div>
-          <div class="trust-card">
-            <strong>Flexible Scheduling</strong
-            ><span>Built around your day</span>
-          </div>
-          <div class="trust-card">
-            <strong>Prompt &amp; Reliable</strong
-            ><span>One-visit repair focus</span>
-          </div>
-        </div>
-      </div>
-
-      <section class="section section--tight">
-        <div class="container badge-row reveal">
+      <section class="section section--tight section--heat">
+        <div class="container badge-row reveal-stagger">
           <img
+            class="reveal"
             src="assets/img/badge-acca.png"
             alt="ACCA"
             height="52"
           />
           <img
+            class="reveal"
             src="assets/img/badge-nate-remote.png"
             alt="NATE certified"
             height="52"
           />
           <img
+            class="reveal"
             src="assets/img/badge-epa.gif"
             alt="EPA certified"
             height="52"
           />
           <img
+            class="reveal"
             src="assets/img/badge-osha.png"
             alt="OSHA"
             height="52"
           />
           <img
-            class="badge--tall"
+            class="reveal badge--tall"
             src="assets/img/badge-superpros.png"
             alt="Superpros 2023"
             height="64"
           />
           <img
+            class="reveal"
             src="assets/img/badge-veteran-cert.png"
             alt="Veteran-Owned Certified"
             height="52"
           />
           <img
+            class="reveal"
             src="assets/img/badge-sdvosb.png"
             alt="SDVOSB CVE"
             height="52"
@@ -255,155 +271,52 @@
 
       <section class="section section--surface">
         <div class="container">
-          <div class="section-head section-head--split reveal">
-            <div>
-              <p class="eyebrow">Service funnels</p>
-              <h2 class="display display--lg">
-                What do you need fixed—or upgraded—today?
-              </h2>
-            </div>
+          <div class="section-head reveal">
+            <p class="eyebrow">What you need</p>
+            <h2 class="display display--lg">
+              One clear path for every HVAC job.
+            </h2>
             <p class="lede">
-              Clear paths for urgent repair, planned replacement, retention
-              maintenance, healthier air, and commercial-scale work.
+              Urgent repair, full replacement, year-round maintenance, cleaner
+              air, or commercial scale—pick the lane and move.
             </p>
           </div>
-          <div class="grid-3">
-            <a class="service-card reveal" href="ac-repair.html">
-              <div class="service-card__media">
-                <img
-                  src="assets/img/service-repair.jpg"
-                  alt="AC repair technician work"
-                  width="600"
-                  height="400"
-                  loading="lazy"
-                />
-              </div>
-              <div class="service-card__body">
-                <h3>Emergency &amp; AC Repair</h3>
-                <p>
-                  Strange noises, weak airflow, hot spots, frozen coils—diagnose
-                  early and restore cooling fast.
-                </p>
-                <span class="service-card__link"
-                  >Repair now <span>→</span></span
-                >
-              </div>
+          <nav class="service-rail" aria-label="Service paths">
+            <a class="reveal" href="emergency.html">
+              <h3>24/7 Emergency</h3>
+              <p>AC down in Florida heat—call, don’t wait on a form.</p>
+              <span class="service-rail__go">Dispatch →</span>
             </a>
-            <a
-              class="service-card reveal reveal-delay-1"
-              href="installation-replacement.html"
-            >
-              <div class="service-card__media">
-                <img
-                  src="assets/img/service-install.jpg"
-                  alt="HVAC installation"
-                  width="600"
-                  height="400"
-                  loading="lazy"
-                />
-              </div>
-              <div class="service-card__body">
-                <h3>Installation &amp; Replacement</h3>
-                <p>
-                  Premium installs with labor/service guarantees. Goodman &amp;
-                  Ruud options and free new-equipment estimates.
-                </p>
-                <span class="service-card__link"
-                  >Explore replacement <span>→</span></span
-                >
-              </div>
+            <a class="reveal" href="ac-repair.html">
+              <h3>AC Repair</h3>
+              <p>
+                Weak airflow, frozen coils, strange noises—diagnose and restore.
+              </p>
+              <span class="service-rail__go">Repair →</span>
             </a>
-            <a
-              class="service-card reveal reveal-delay-2"
-              href="maintenance.html"
-            >
-              <div class="service-card__media">
-                <img
-                  src="assets/img/service-maintenance.jpg"
-                  alt="AC maintenance"
-                  width="600"
-                  height="400"
-                  loading="lazy"
-                />
-              </div>
-              <div class="service-card__body">
-                <h3>Maintenance Plans</h3>
-                <p>
-                  $300 agreement: four tune-ups, free filters, and 10% off
-                  service calls—priority comfort all year.
-                </p>
-                <span class="service-card__link"
-                  >See the plan <span>→</span></span
-                >
-              </div>
+            <a class="reveal" href="installation-replacement.html">
+              <h3>Installation &amp; Replacement</h3>
+              <p>
+                Goodman &amp; Ruud options, labor guarantees, free estimates.
+              </p>
+              <span class="service-rail__go">Replace →</span>
             </a>
-            <a class="service-card reveal" href="indoor-air-quality.html">
-              <div class="service-card__media">
-                <img
-                  src="assets/img/service-iaq.jpg"
-                  alt="Indoor air quality"
-                  width="600"
-                  height="400"
-                  loading="lazy"
-                />
-              </div>
-              <div class="service-card__body">
-                <h3>Indoor Air Quality</h3>
-                <p>
-                  Purifiers, filtration, humidifiers, dehumidifiers, HRV/ERV,
-                  and duct sanitizing for healthier rooms.
-                </p>
-                <span class="service-card__link"
-                  >Improve your air <span>→</span></span
-                >
-              </div>
+            <a class="reveal" href="maintenance.html">
+              <h3>Maintenance Plans</h3>
+              <p>$300 agreement: four tune-ups, free filters, 10% off calls.</p>
+              <span class="service-rail__go">Protect →</span>
             </a>
-            <a
-              class="service-card reveal reveal-delay-1"
-              href="commercial.html"
-            >
-              <div class="service-card__media">
-                <img
-                  src="assets/img/service-commercial.jpg"
-                  alt="Commercial HVAC construction"
-                  width="600"
-                  height="400"
-                  loading="lazy"
-                />
-              </div>
-              <div class="service-card__body">
-                <h3>Commercial HVAC</h3>
-                <p>
-                  Offices, restaurants, multi-unit, and new construction—sized
-                  right and installed with discipline.
-                </p>
-                <span class="service-card__link"
-                  >Commercial capabilities <span>→</span></span
-                >
-              </div>
+            <a class="reveal" href="indoor-air-quality.html">
+              <h3>Indoor Air Quality</h3>
+              <p>Filtration, UV, humidity control, duct sanitizing.</p>
+              <span class="service-rail__go">Breathe →</span>
             </a>
-            <a class="service-card reveal reveal-delay-2" href="services.html">
-              <div class="service-card__media">
-                <img
-                  src="assets/img/service-menu.jpg"
-                  alt="Heating and cooling services"
-                  width="600"
-                  height="400"
-                  loading="lazy"
-                />
-              </div>
-              <div class="service-card__body">
-                <h3>Full Service Menu</h3>
-                <p>
-                  Residential and commercial heating, cooling, smart
-                  thermostats, and new construction installs.
-                </p>
-                <span class="service-card__link"
-                  >View all services <span>→</span></span
-                >
-              </div>
+            <a class="reveal" href="commercial.html">
+              <h3>Commercial HVAC</h3>
+              <p>Restaurants, offices, multi-unit—sized with discipline.</p>
+              <span class="service-rail__go">Commercial →</span>
             </a>
-          </div>
+          </nav>
         </div>
       </section>
 
@@ -413,11 +326,10 @@
             <p class="eyebrow">Live promotions · expire 09/30/2026</p>
             <h2 class="display display--lg">Specials worth calling about</h2>
             <p class="lede">
-              Pulled from current published offers on
-              kueblermechanical.com—presented for faster decision-making.
+              Current published offers—packaged for faster decisions.
             </p>
           </div>
-          <div class="grid-3">
+          <div class="grid-3 reveal-stagger">
             <article class="offer-card offer-card--featured reveal">
               <div class="offer-card__price">$300</div>
               <h3>Maintenance Agreement</h3>
@@ -433,7 +345,7 @@
                 >Lock in the plan</a
               >
             </article>
-            <article class="offer-card reveal reveal-delay-1">
+            <article class="offer-card reveal">
               <div class="offer-card__price">$129</div>
               <h3>Tune-Up</h3>
               <ul>
@@ -444,9 +356,11 @@
               <p class="offer-card__note">
                 Call for details. Expires 09/30/2026.
               </p>
-              <a class="btn btn--outline" href="specials.html">All specials</a>
+              <a class="btn btn--outline" href="specials.html#tuneup"
+                >All specials</a
+              >
             </article>
-            <article class="offer-card reveal reveal-delay-2">
+            <article class="offer-card reveal">
               <div class="offer-card__price">$200</div>
               <h3>WiFi Thermostat</h3>
               <ul>
@@ -463,8 +377,8 @@
             </article>
           </div>
           <div class="mt-8 reveal">
-            <a class="btn btn--navy" href="specials.html"
-              >View veteran discount, free UV light &amp; more →</a
+            <a class="btn btn--navy" href="specials.html#veterans"
+              >Veteran 10% off, free UV light &amp; more →</a
             >
           </div>
         </div>
@@ -472,11 +386,12 @@
 
       <section class="section section--navy">
         <div class="container">
-          <div class="proof-panel">
+          <div class="owner-chapter">
             <div class="reveal">
-              <p class="eyebrow" style="color: #f08c42">
-                Owner-led credibility
-              </p>
+              <div class="honor-stripe" aria-hidden="true">
+                <span></span><span></span><span></span>
+              </div>
+              <p class="honor-mark">Owner-led · United States Marine Corps</p>
               <h2 class="display display--lg">
                 Daniel Lipp’s standard of discipline
               </h2>
@@ -501,7 +416,7 @@
                 >
               </div>
             </div>
-            <div class="proof-panel__media reveal reveal-delay-1">
+            <div class="owner-chapter__media reveal reveal-delay-1">
               <img
                 src="assets/img/daniel-crew.jpeg"
                 alt="AC installation project by Kuebler Mechanical"
@@ -532,7 +447,7 @@
               style="justify-self: end; max-width: 220px"
             />
           </div>
-          <div class="quote-stack grid-2">
+          <div class="quote-stack grid-2 reveal-stagger">
             <blockquote class="quote reveal">
               <p>
                 “Prompt, professional service. The technician was very thorough
@@ -542,7 +457,7 @@
                 <span>Bill Fenton</span><span class="stars">★★★★★</span>
               </footer>
             </blockquote>
-            <blockquote class="quote reveal reveal-delay-1">
+            <blockquote class="quote reveal">
               <p>
                 “Kuebler came today to perform quarterly service. Blair is very
                 professional… I highly recommend Kuebler. The service contract
@@ -558,7 +473,7 @@
                 <span>Michael Wyatt</span><span class="stars">★★★★★</span>
               </footer>
             </blockquote>
-            <blockquote class="quote reveal reveal-delay-1">
+            <blockquote class="quote reveal">
               <p>
                 “Blair was so polite and professional. He came to do our AC
                 quarterly maintenance and answered all our questions. Great
@@ -572,7 +487,7 @@
         </div>
       </section>
 
-      <section class="section">
+      <section class="section section--heat">
         <div class="container">
           <div class="area-map">
             <div class="flagship reveal">
