@@ -72,6 +72,30 @@
   --content-wide: min(1360px, calc(100% - 2rem));
   --header-h: 4.5rem;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Motion tokens */
+  --motion-fast: 0.2s;
+  --motion-base: 0.45s;
+  --motion-slow: 0.85s;
+  --motion-reveal: 0.9s;
+  --motion-ken: 22s;
+  --motion-pulse: 1.8s;
+  --motion-heat: 4s;
+  --motion-glow: 2.4s;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-cinema: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Craft / atmosphere tokens */
+  --craft-object-x: 58%;
+  --craft-object-y: 42%;
+  --atmosphere-heat: var(--heat);
+  --atmosphere-grain: 0.035;
+  --atmosphere-navy-veil: rgba(4, 11, 20, 0.88);
+  --urgent-shade-a: rgba(179, 58, 43, 0.42);
+  --urgent-shade-b: rgba(4, 11, 20, 0.78);
+  --urgent-shade-c: rgba(224, 112, 32, 0.22);
+  --quote-overlap: -4rem;
+  --quote-overlap-mobile: -1.75rem;
 }
 
 *,
@@ -100,6 +124,8 @@ body {
     ),
     linear-gradient(180deg, #f2f6fa 0%, var(--ice-50) 38%, #e8eef5 100%);
   min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
   overflow-x: hidden;
 }
 body::before {
@@ -108,7 +134,7 @@ body::before {
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.035;
+  opacity: var(--atmosphere-grain);
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 180px 180px;
 }
@@ -1552,6 +1578,19 @@ address {
   }
   .hero--cinematic .hero__media img {
     transform: none !important;
+    animation: none !important;
+  }
+  /* Named motion kills (heatPulse, countdownGlow, scrollPulse, brand-flash) */
+  .emergency-call::before,
+  .offer-card--featured .countdown,
+  .offer-card--veteran .countdown,
+  .hero__scroll-line,
+  .hero--cinematic.is-ready .hero__media img,
+  .brand-flash {
+    animation: none !important;
+  }
+  .brand-flash {
+    display: none !important;
   }
 }
 
@@ -2387,8 +2426,10 @@ address {
    ========================================================= */
 
 .hero--cinematic {
-  min-height: 100svh;
+  /* Fallback chain: vh → svh → dvh (mobile browser chrome) */
   min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
   align-items: end;
   color: var(--white);
 }
@@ -2401,8 +2442,13 @@ address {
   animation: none;
   transition: transform 0.1s linear;
 }
+/* Ken Burns idle — disabled when JS parallax owns transform (Conversion: toggle .is-parallax) */
 .hero--cinematic.is-ready .hero__media img {
-  animation: heroKen 22s var(--ease) infinite alternate;
+  animation: heroKen var(--motion-ken) var(--ease-cinema) infinite alternate;
+}
+.hero--cinematic.is-parallax .hero__media img,
+.hero--cinematic.is-parallax.is-ready .hero__media img {
+  animation: none;
 }
 @keyframes heroKen {
   from {
@@ -2463,14 +2509,19 @@ address {
 }
 .hero__kicker .honor-mark {
   color: var(--orange-400);
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  opacity: 0.88;
 }
 .hero__wordmark {
   font-family: var(--font-display);
-  font-size: clamp(0.95rem, 0.85rem + 0.35vw, 1.15rem);
+  font-size: clamp(1.55rem, 1.05rem + 2.4vw, 2.85rem);
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.92);
+  color: var(--white);
+  line-height: 1.05;
+  text-shadow: 0 2px 28px rgba(4, 11, 20, 0.45);
 }
 .hero__copy {
   max-width: min(44rem, 100%);
@@ -2486,12 +2537,14 @@ address {
   opacity: 1;
   transform: none;
 }
+/* Headline supports brand — slightly tamed so wordmark wins the viewport */
 .hero--cinematic .display--xl {
-  font-size: clamp(2.85rem, 1.5rem + 4.6vw, 5.4rem);
-  max-width: 10ch;
+  font-size: clamp(2.15rem, 1.35rem + 3.2vw, 4.15rem);
+  max-width: 14ch;
   text-wrap: balance;
-  line-height: 0.98;
-  letter-spacing: -0.04em;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  color: rgba(255, 255, 255, 0.94);
 }
 .hero--cinematic .lede {
   max-width: 32rem;
@@ -2540,7 +2593,7 @@ address {
   width: 1px;
   height: 2.25rem;
   background: linear-gradient(180deg, var(--orange-400), transparent);
-  animation: scrollPulse 1.8s var(--ease) infinite;
+  animation: scrollPulse var(--motion-pulse) var(--ease) infinite;
 }
 @keyframes scrollPulse {
   0%,
@@ -2557,7 +2610,7 @@ address {
 /* Quote beat — conversion after cinema */
 .quote-beat {
   position: relative;
-  margin-top: -4rem;
+  margin-top: var(--quote-overlap);
   z-index: 4;
   padding-bottom: clamp(2rem, 4vw, 3rem);
 }
@@ -2625,19 +2678,27 @@ address {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.75rem 1.1rem;
+  gap: 0.65rem 0.95rem;
   margin-top: 1.25rem;
   padding-top: 1.1rem;
   border-top: 1px solid var(--line);
 }
-.quote-beat__honor img {
+/* Honor row: tighter than global 56px badge hard-cap (higher specificity) */
+.quote-beat .quote-beat__honor > img,
+.quote-beat__intro .quote-beat__honor > img {
   display: block;
-  height: 32px;
-  max-height: 32px;
-  max-width: 88px;
+  height: 36px;
+  max-height: 36px;
+  max-width: 96px;
   width: auto;
   object-fit: contain;
   flex: 0 0 auto;
+}
+.quote-beat .quote-beat__honor > img.badge--wide,
+.quote-beat__intro .quote-beat__honor > img.badge--wide {
+  height: 28px;
+  max-height: 28px;
+  max-width: 110px;
 }
 .quote-beat__form {
   background: linear-gradient(180deg, #fbfcfe 0%, var(--ice-50) 100%);
@@ -2654,13 +2715,18 @@ address {
 }
 @media (max-width: 900px) {
   .quote-beat {
-    margin-top: -2rem;
+    margin-top: var(--quote-overlap-mobile);
   }
   .quote-beat__panel {
     grid-template-columns: 1fr;
   }
   .quote-beat__intro h2 {
     max-width: none;
+  }
+}
+@media (max-width: 560px) {
+  .quote-beat {
+    margin-top: -1.25rem;
   }
 }
 
@@ -2832,6 +2898,8 @@ address {
 /* Emergency theater */
 .page-hero--emergency {
   min-height: min(72vh, 640px);
+  min-height: min(72svh, 640px);
+  min-height: min(72dvh, 640px);
   display: grid;
   align-items: end;
   background:
@@ -2854,6 +2922,83 @@ address {
 .page-hero--emergency .display--xl {
   max-width: 14ch;
 }
+
+/* Full-bleed craft photo page hero (emergency + reusable) */
+.page-hero--photo {
+  position: relative;
+  isolation: isolate;
+  padding: 0;
+  min-height: min(78vh, 700px);
+  min-height: min(78svh, 700px);
+  min-height: min(78dvh, 700px);
+  background: var(--navy-950);
+}
+.page-hero--photo::before {
+  display: none; /* .page-hero__shade owns atmosphere */
+}
+.page-hero--photo .page-hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.page-hero--photo .page-hero__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--craft-object-x) var(--craft-object-y);
+}
+.page-hero--photo .page-hero__shade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      108deg,
+      var(--atmosphere-navy-veil) 0%,
+      rgba(4, 11, 20, 0.72) 42%,
+      rgba(4, 11, 20, 0.45) 100%
+    ),
+    linear-gradient(0deg, rgba(4, 11, 20, 0.75) 0%, transparent 50%);
+}
+.page-hero--photo .container,
+.page-hero--photo .page-hero__grid {
+  position: relative;
+  z-index: 2;
+}
+.page-hero--photo .page-hero__grid {
+  padding: clamp(5.5rem, 12vh, 8rem) 0 clamp(3rem, 6vh, 4.5rem);
+}
+
+/* Emergency + craft photo — urgent heat veil over install photography */
+.page-hero--emergency.page-hero--photo {
+  background: var(--navy-950);
+}
+.page-hero--emergency.page-hero--photo .page-hero__shade {
+  background:
+    linear-gradient(
+      115deg,
+      rgba(20, 8, 8, 0.94) 0%,
+      rgba(10, 21, 36, 0.82) 45%,
+      rgba(4, 11, 20, 0.55) 100%
+    ),
+    linear-gradient(0deg, rgba(4, 11, 20, 0.88) 0%, transparent 48%),
+    radial-gradient(
+      720px 400px at 78% 28%,
+      var(--urgent-shade-a),
+      transparent 58%
+    ),
+    radial-gradient(
+      480px 280px at 30% 70%,
+      var(--urgent-shade-c),
+      transparent 55%
+    );
+}
+.page-hero--emergency.page-hero--photo .page-hero__media img {
+  object-position: 52% 40%;
+  filter: saturate(0.92) contrast(1.06);
+}
+
 .emergency-call {
   position: relative;
   overflow: hidden;
@@ -2867,7 +3012,7 @@ address {
     rgba(255, 255, 255, 0.18),
     transparent 45%
   );
-  animation: heatPulse 4s var(--ease) infinite;
+  animation: heatPulse var(--motion-heat) var(--ease) infinite;
   pointer-events: none;
 }
 @keyframes heatPulse {
@@ -3016,7 +3161,7 @@ address {
 /* Countdown pulse on featured */
 .offer-card--featured .countdown,
 .offer-card--veteran .countdown {
-  animation: countdownGlow 2.4s var(--ease) infinite;
+  animation: countdownGlow var(--motion-glow) var(--ease) infinite;
 }
 @keyframes countdownGlow {
   0%,
@@ -3057,11 +3202,25 @@ img[src*="sdvosb"] {
   height: auto;
   object-fit: contain;
 }
+.badge-row img[src*="badge-"],
+.badge-row img[src*="nate"],
+.badge-row img[src*="veteran"],
+.badge-row img[src*="google-guarantee"],
+.badge-row img[src*="sdvosb"] {
+  max-height: 44px;
+  height: 44px;
+}
+.badge-row img.badge--tall[src*="badge-"],
+.badge-row img.badge--tall[src*="nate"],
+.badge-row img.badge--tall[src*="veteran"] {
+  max-height: 52px;
+  height: 52px;
+}
 
 /* Craft hero — install photography as primary plane */
 .hero--craft .hero__media img {
   object-fit: cover;
-  object-position: 58% 42%;
+  object-position: var(--craft-object-x) var(--craft-object-y);
 }
 .hero--craft .hero__shade {
   background:
@@ -3072,12 +3231,52 @@ img[src*="sdvosb"] {
       rgba(4, 11, 20, 0.48) 66%,
       rgba(4, 11, 20, 0.68) 100%
     ),
-    linear-gradient(0deg, rgba(4, 11, 20, 0.88) 0%, transparent 52%),
+    linear-gradient(0deg, var(--atmosphere-navy-veil) 0%, transparent 52%),
     radial-gradient(
       720px 380px at 72% 38%,
       rgba(224, 112, 32, 0.22),
       transparent 58%
     );
+}
+
+/* Media craft — mission/about photo plane utility */
+.media-craft {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  isolation: isolate;
+  background: var(--navy-900);
+}
+.media-craft img {
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+  object-fit: cover;
+  object-position: var(--craft-object-x) var(--craft-object-y);
+  display: block;
+}
+.media-craft::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 4px;
+  z-index: 1;
+  background: linear-gradient(
+    90deg,
+    var(--honor-red),
+    var(--honor-white),
+    var(--navy-600)
+  );
+}
+.owner-chapter__media.media-craft,
+.owner-chapter__media.media-craft img {
+  min-height: 360px;
+}
+.owner-chapter__media.media-craft::after {
+  /* honor bar already on .media-craft; suppress duplicate from owner-chapter */
+  height: 4px;
 }
 
 /* Mission chapter — flagship home weight + timeline stagger */

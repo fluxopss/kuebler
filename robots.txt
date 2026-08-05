@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /compare.html
+
+Sitemap: https://kuebler.fluxlab.agency/sitemap.xml

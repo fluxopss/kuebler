@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -8,18 +8,37 @@
       name="description"
       content="24/7 emergency AC and heating repair in Port St. Lucie. Call (772) 878-2281 now. Symptom triage and fast dispatch from Kuebler Mechanical."
     />
+    <link rel="canonical" href="https://kuebler.fluxlab.agency/emergency.html" />
+    <meta property="og:url" content="https://kuebler.fluxlab.agency/emergency.html" />
+    <meta property="og:site_name" content="Kuebler Mechanical" />
+    <meta property="og:type" content="website" />
     <link rel="icon" href="assets/img/favicon.png" />
     <link rel="preconnect" href="https://api.fontshare.com" />
+    <link
+      rel="preload"
+      as="style"
+      href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=satoshi@400,500,600,700&display=swap"
+    />
     <link
       href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=satoshi@400,500,600,700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="assets/css/styles.css?v=elev-20260805e" />
+    <link rel="stylesheet" href="assets/css/styles.css?v=elev-20260805f" />
   </head>
   <body>
     <div id="site-header"></div>
     <main id="main">
-      <header class="page-hero page-hero--emergency">
+      <header class="page-hero page-hero--emergency page-hero--photo">
+        <div class="page-hero__media">
+          <img
+            src="assets/img/service-install.jpg"
+            alt="Kuebler Mechanical HVAC craftsmanship"
+            width="1920"
+            height="1080"
+            fetchpriority="high"
+          />
+        </div>
+        <div class="page-hero__shade" aria-hidden="true"></div>
         <div class="container page-hero__grid">
           <div>
             <div class="honor-stripe" aria-hidden="true">
@@ -27,19 +46,19 @@
             </div>
             <p class="honor-mark">24/7 · Treasure Coast dispatch</p>
             <h1 class="display display--xl">
-              AC down in Florida heat? Call now—don’t wait for a form.
+              AC down? Call dispatch—we’ll get a tech moving.
             </h1>
             <p class="lede">
-              Comfort fails fast in August. Office hours Mon–Fri 7:30AM–4:00PM;
-              emergency dispatch answers around the clock. NATE-certified techs.
-              Fully stocked vans. Veteran-led response when waiting isn’t an
-              option.
+              Stay calm. Tell us what’s failing. Office hours Mon–Fri
+              7:30AM–4:00PM; emergency dispatch answers around the clock.
+              NATE-certified techs. Fully stocked vans. We do the job right the
+              first time—even under pressure.
             </p>
             <div class="btn-row mt-6">
               <a class="btn btn--primary" href="tel:+17728782281"
-                >Call (772) 878-2281</a
+                >Call dispatch</a
               >
-              <a class="btn btn--ghost" href="#callback">Request callback</a>
+              <a class="btn btn--ghost" href="#callback">Request a callback</a>
             </div>
           </div>
         </div>
@@ -95,21 +114,21 @@
             </p>
             <div class="btn-row mt-6">
               <a class="btn btn--navy" href="ac-repair.html"
-                >Full repair funnel</a
+                >Full repair path</a
               >
               <a class="btn btn--outline" href="installation-replacement.html"
-                >Replacement wizard</a
+                >Get a free estimate</a
               >
             </div>
           </div>
           <div class="form-card reveal reveal-delay-1">
             <h3 class="display display--md mb-4">
-              Can’t talk? Book a callback
+              Can’t talk? Request a callback
             </h3>
             <form data-demo-form>
               <div class="form-success" role="status">
-                Received with priority. A Kuebler team member will call back
-                shortly. For fastest help, call (772) 878-2281 now.
+                We got it—someone will call you back. For fastest help, call
+                (772) 878-2281 now.
               </div>
               <label class="honeypot" aria-hidden="true"
                 >Company<input
@@ -124,7 +143,11 @@
                 </div>
                 <div class="field">
                   <label for="p">Phone</label
-                  ><input id="p" name="phone" type="tel" required />
+                  ><input id="p" name="phone" type="tel" required autocomplete="tel" />
+                </div>
+                <div class="field field--full">
+                  <label for="e">Email <span class="text-muted">(optional)</span></label
+                  ><input id="e" name="email" type="email" autocomplete="email" />
                 </div>
                 <div class="field field--full">
                   <label for="m">What’s wrong?</label
@@ -141,10 +164,10 @@
                 type="submit"
                 style="width: 100%"
               >
-                Request emergency callback
+                Request a callback
               </button>
               <p class="form-note">
-                For fastest help, call (772) 878-2281 now.
+                For fastest help, call dispatch at (772) 878-2281 now.
               </p>
             </form>
           </div>
@@ -152,6 +175,6 @@
       </section>
     </main>
     <div id="site-footer"></div>
-    <script src="assets/js/main.js?v=elev-20260805e"></script>
+    <script src="assets/js/main.js?v=elev-20260805f"></script>
   </body>
 </html>

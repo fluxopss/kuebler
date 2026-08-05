@@ -1,7 +1,7 @@
 # Post-deploy verification for kuebler.fluxlab.agency
 param(
   [string]$BaseUrl = "https://kuebler.fluxlab.agency",
-  [string]$AssetVersion = "elev-20260805e"
+  [string]$AssetVersion = "elev-20260805f"
 )
 
 $ErrorActionPreference = "Stop"
@@ -10,7 +10,29 @@ $fail = 0
 function Ok($msg) { Write-Host "OK  $msg" -ForegroundColor Green }
 function Bad($msg) { Write-Host "FAIL $msg" -ForegroundColor Red; $script:fail++ }
 
-Write-Host "Verifying $BaseUrl ..."
+Write-Host "Verifying $BaseUrl (asset $AssetVersion) ..."
+
+$publicPages = @(
+  "/",
+  "/about.html",
+  "/services.html",
+  "/ac-repair.html",
+  "/installation-replacement.html",
+  "/maintenance.html",
+  "/indoor-air-quality.html",
+  "/commercial.html",
+  "/emergency.html",
+  "/specials.html",
+  "/financing.html",
+  "/service-areas.html",
+  "/gallery.html",
+  "/faq.html",
+  "/blog.html",
+  "/videos.html",
+  "/contact.html",
+  "/careers.html",
+  "/coupon-print.html"
+)
 
 try {
   $homePage = Invoke-WebRequest -Uri "$BaseUrl/?v=$(Get-Random)" -UseBasicParsing -TimeoutSec 30
@@ -30,6 +52,58 @@ if ($html -match 'data-quote-beat') { Ok "Quote-beat markup" } else { Bad "Missi
 if ($html -notmatch 'hero--split') { Ok "No split-hero markup" } else { Bad "Old hero--split still present" }
 if ($html -match [regex]::Escape("styles.css?v=$AssetVersion")) { Ok "CSS cache-bust $AssetVersion" } else { Bad "CSS not cache-busted to $AssetVersion" }
 if ($html -match [regex]::Escape("main.js?v=$AssetVersion")) { Ok "JS cache-bust $AssetVersion" } else { Bad "JS not cache-busted to $AssetVersion" }
+if ($html -match 'rel="canonical"') { Ok "Home has canonical" } else { Bad "Home missing canonical" }
+if ($html -match 'og:url') { Ok "Home has og:url" } else { Bad "Home missing og:url" }
+if ($html -match 'og:site_name') { Ok "Home has og:site_name" } else { Bad "Home missing og:site_name" }
+if ($html -match 'rel="preload"[^>]+fontshare|fontshare[^>]+rel="preload"') { Ok "Fontshare preload" } else {
+  if ($html -match 'rel="preload"' -and $html -match 'api\.fontshare\.com') { Ok "Fontshare preload" } else { Bad "Missing Fontshare preload" }
+}
+
+# Multi-page 200s
+foreach ($path in $publicPages) {
+  if ($path -eq "/") { continue }
+  try {
+    $r = Invoke-WebRequest -Uri "$BaseUrl$path" -UseBasicParsing -TimeoutSec 20
+    if ($r.StatusCode -eq 200) { Ok "200 $path" } else { Bad "$path status $($r.StatusCode)" }
+  } catch {
+    Bad "$path request failed: $_"
+  }
+}
+
+# robots + sitemap
+foreach ($path in @("/robots.txt", "/sitemap.xml")) {
+  try {
+    $r = Invoke-WebRequest -Uri "$BaseUrl$path" -UseBasicParsing -TimeoutSec 15
+    if ($r.StatusCode -eq 200) { Ok "200 $path" } else { Bad "$path status $($r.StatusCode)" }
+  } catch {
+    Bad "$path request failed: $_"
+  }
+}
+
+try {
+  $robots = (Invoke-WebRequest -Uri "$BaseUrl/robots.txt" -UseBasicParsing -TimeoutSec 15).Content
+  if ($robots -match 'Disallow:\s*/compare\.html') { Ok "robots disallows compare.html" } else { Bad "robots missing compare disallow" }
+  if ($robots -match 'Sitemap:\s*https://kuebler\.fluxlab\.agency/sitemap\.xml') { Ok "robots Sitemap URL" } else { Bad "robots missing Sitemap" }
+} catch {
+  Bad "robots content check failed: $_"
+}
+
+# Zero wp-content hotlinks across sampled public pages
+$hotlinkHits = 0
+$samplePaths = @("/", "/gallery.html", "/commercial.html", "/blog.html", "/about.html", "/services.html", "/contact.html")
+foreach ($path in $samplePaths) {
+  try {
+    $uri = if ($path -eq "/") { "$BaseUrl/?v=$(Get-Random)" } else { "$BaseUrl$path" }
+    $c = (Invoke-WebRequest -Uri $uri -UseBasicParsing -TimeoutSec 20).Content
+    if ($c -match 'kueblermechanical\.com/wp-content') {
+      $hotlinkHits++
+      Bad "wp-content hotlink on $path"
+    }
+  } catch {
+    Bad "hotlink scan failed for $path: $_"
+  }
+}
+if ($hotlinkHits -eq 0) { Ok "Zero wp-content hotlinks (sampled pages)" }
 
 $cssUrl = "$BaseUrl/assets/css/styles.css?v=$AssetVersion"
 $css = Invoke-WebRequest -Uri $cssUrl -UseBasicParsing -TimeoutSec 30

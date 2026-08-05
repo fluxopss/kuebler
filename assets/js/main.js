@@ -1,4 +1,4 @@
-/* Kuebler Mechanical demo — chrome + deal-close interactions */
+/* Kuebler Mechanical — site chrome + conversion interactions */
 (function () {
   "use strict";
 
@@ -7,8 +7,14 @@
   var PHONE_SMS =
     "sms:+17728782281?&body=" +
     encodeURIComponent(
-      "Hi Kuebler Mechanical — I need HVAC help in Port St. Lucie.",
+      "Hi Kuebler — I need HVAC help in Port St. Lucie. When can you get out?",
     );
+  var PHONE_SMS_EMERGENCY =
+    "sms:+17728782281?&body=" +
+    encodeURIComponent(
+      "EMERGENCY — HVAC down in Port St. Lucie. Need a tech ASAP.",
+    );
+  var CREED = "Do the job right the first time.";
   var LOGO = "assets/img/logo.svg";
   var KNIGHT = "assets/img/knight.svg";
   var OFFER_END = new Date("2026-09-30T23:59:59-04:00").getTime();
@@ -16,6 +22,13 @@
     "https://search.google.com/local/writereview?placeid=ChIJN1t_tDeu2YgRq0yY5k2Y5k2"; // fallback; live buttons use search — use site review CTA
   // Prefer live-site contact review path if GBP place id unknown
   GOOGLE_REVIEW = "https://kueblermechanical.com/contact-us/";
+
+  var FORM_SUCCESS_HTML =
+    'Received. We&rsquo;ll call you back. Need us sooner? Call <a href="' +
+    PHONE_TEL +
+    '">' +
+    PHONE_DISPLAY +
+    "</a>.";
 
   var OFFERS = {
     tuneup: {
@@ -113,6 +126,8 @@
     { href: "contact.html", label: "Contact" },
   ];
 
+  var WIZARD_STEP_FIELDS = ["city", "home", "age", "intent"];
+
   function qs(name) {
     try {
       return new URLSearchParams(window.location.search).get(name);
@@ -129,6 +144,25 @@
     return file;
   }
 
+  function isEmergencyPage() {
+    return currentFile() === "emergency.html";
+  }
+
+  function track(eventName, payload) {
+    try {
+      window.dataLayer = window.dataLayer || [];
+      var data = { event: eventName };
+      if (payload) {
+        Object.keys(payload).forEach(function (key) {
+          data[key] = payload[key];
+        });
+      }
+      window.dataLayer.push(data);
+    } catch (e) {
+      /* no-op when analytics unavailable */
+    }
+  }
+
   function linkList(items) {
     var file = currentFile();
     return items
@@ -139,12 +173,52 @@
       .join("");
   }
 
-  function smsOffer(title) {
+  function smsOffer(title, offerKey) {
+    var body;
+    if (offerKey === "veterans" || /veteran/i.test(title || "")) {
+      body =
+        "Hi Kuebler — fellow vet here. Want details on the " +
+        title +
+        " offer.";
+    } else {
+      body =
+        "Hi Kuebler — interested in the " +
+        title +
+        " offer. Can you text details?";
+    }
+    return "sms:+17728782281?&body=" + encodeURIComponent(body);
+  }
+
+  function buildStickyCall() {
+    var emergency = isEmergencyPage();
+    var callBtn =
+      '<a class="btn btn--primary" href="' +
+      PHONE_TEL +
+      '" data-cta="sticky-call" style="font-weight:800"' +
+      (emergency ? ' aria-label="Call emergency dispatch now"' : "") +
+      "><span>Call Now</span></a>";
+    var textBtn =
+      '<a class="btn btn--call" href="' +
+      (emergency ? PHONE_SMS_EMERGENCY : PHONE_SMS) +
+      '" data-cta="sticky-text"><span>' +
+      (emergency ? "Text Emergency" : "Text") +
+      "</span></a>";
+    var bookBtn =
+      '<a class="btn ' +
+      (emergency ? "btn--outline" : "btn--call") +
+      '" href="contact.html?need=Schedule%20Repair" data-cta="sticky-book"' +
+      (emergency ? ' style="opacity:0.72"' : "") +
+      "><span>" +
+      (emergency ? "Book later" : "Book") +
+      "</span></a>";
     return (
-      "sms:+17728782281?&body=" +
-      encodeURIComponent(
-        "Hi Kuebler — please text me details on the " + title + " offer.",
-      )
+      '<div class="sticky-call' +
+      (emergency ? " sticky-call--emergency" : "") +
+      '" aria-label="Quick actions">' +
+      callBtn +
+      textBtn +
+      bookBtn +
+      "</div>"
     );
   }
 
@@ -159,11 +233,14 @@
       "<span>Port St. Lucie &amp; The Treasure Coast</span>" +
       "<span>License #CAC1820289</span>" +
       '<span style="color:#f08c42;font-weight:700">★ Veteran-Owned</span>' +
+      '<span title="Our creed">' +
+      CREED +
+      "</span>" +
       '<a href="emergency.html" style="color:#f08c42;font-weight:700">24/7 Emergency</a>' +
       "</div>" +
       '<a class="topbar__phone" href="' +
       PHONE_TEL +
-      '">' +
+      '" data-cta="topbar-phone">' +
       PHONE_DISPLAY +
       "</a>" +
       "</div></div>" +
@@ -178,10 +255,10 @@
       links +
       "</nav>" +
       '<div class="nav__cta">' +
-      '<a class="btn btn--outline" href="specials.html#tuneup">$129 Tune-Up</a>' +
+      '<a class="btn btn--outline" href="specials.html#tuneup" data-cta="nav-tuneup">$129 Tune-Up</a>' +
       '<a class="btn btn--primary" href="' +
       PHONE_TEL +
-      '">Call ' +
+      '" data-cta="nav-call">Call ' +
       PHONE_DISPLAY +
       "</a>" +
       "</div>" +
@@ -191,13 +268,13 @@
       mobileLinks +
       '<a class="btn btn--primary" href="' +
       PHONE_TEL +
-      '">Call ' +
+      '" data-cta="drawer-call">Call ' +
       PHONE_DISPLAY +
       "</a>" +
       '<a class="btn btn--outline" href="' +
       PHONE_SMS +
-      '">Text Us</a>' +
-      '<a class="btn btn--outline" href="contact.html">Request Service</a>' +
+      '" data-cta="drawer-text">Text Us</a>' +
+      '<a class="btn btn--outline" href="contact.html" data-cta="drawer-contact">Request Service</a>' +
       "</div>" +
       "</header>"
     );
@@ -205,6 +282,24 @@
 
   function buildFooter() {
     var pitchOn = qs("pitch") === "1";
+    var footerBottom =
+      "<span>&copy; " +
+      new Date().getFullYear() +
+      " Kuebler Mechanical LLC. All rights reserved.</span>" +
+      "<span>" +
+      CREED +
+      "</span>" +
+      "<span>Port St. Lucie &amp; the Treasure Coast</span>";
+
+    if (pitchOn) {
+      footerBottom =
+        "<span>&copy; " +
+        new Date().getFullYear() +
+        " Kuebler Mechanical LLC. All rights reserved.</span>" +
+        '<span class="demo-badge">Flux Labs Demo</span>' +
+        "<span>Content sourced from kueblermechanical.com</span>";
+    }
+
     return (
       '<footer class="site-footer">' +
       '<div class="container footer-grid">' +
@@ -213,6 +308,9 @@
       LOGO +
       '" alt="Kuebler Mechanical" width="170" height="44" />' +
       "<p>Premium residential &amp; commercial HVAC for Port St. Lucie and the Treasure Coast. Licensed, bonded, veteran-owned—American craftsmanship you can call at 2AM.</p>" +
+      '<p class="mt-4" style="color:#f08c42;font-weight:700;font-style:italic">' +
+      CREED +
+      "</p>" +
       '<p class="mt-4"><strong style="color:#fff">License #CAC1820289</strong></p>' +
       "</div>" +
       '<div><h4>Services</h4><div class="footer-links">' +
@@ -239,37 +337,25 @@
       "<p>574 NW Mercantile Ave. Suite 107<br>Port St. Lucie, FL 34986</p>" +
       '<p class="mt-4"><a href="' +
       PHONE_TEL +
-      '" style="color:#f08c42;font-weight:700;font-size:1.05rem">' +
+      '" style="color:#f08c42;font-weight:700;font-size:1.05rem" data-cta="footer-phone">' +
       PHONE_DISPLAY +
       "</a></p>" +
       '<p class="mt-2">Mon–Fri 7:30AM–4:00PM<br>24/7 Emergency Service</p>' +
       "</div>" +
       "</div>" +
       '<div class="container footer-bottom">' +
-      "<span>&copy; " +
-      new Date().getFullYear() +
-      " Kuebler Mechanical LLC. All rights reserved.</span>" +
-      '<span class="demo-badge">Flux Labs Demo</span>' +
-      "<span>Content sourced from kueblermechanical.com</span>" +
+      footerBottom +
       "</div>" +
-      '<div class="pitch-strip' +
-      (pitchOn ? " is-on" : "") +
-      '" id="pitchStrip">' +
-      "<strong>Pitch mode:</strong> Same coupons, reviews &amp; financing — without CAPTCHA friction, Salient template sameness, or “Powered by Optic.” Leads flow to <strong>your</strong> GHL." +
-      "</div>" +
+      (pitchOn
+        ? '<div class="pitch-strip is-on" id="pitchStrip">' +
+          "<strong>Pitch mode:</strong> Same coupons, reviews &amp; financing — without CAPTCHA friction, Salient template sameness, or “Powered by Optic.” Leads flow to <strong>your</strong> GHL." +
+          "</div>"
+        : "") +
       "</footer>" +
       '<a class="review-pill" href="' +
       GOOGLE_REVIEW +
-      '" target="_blank" rel="noopener">★ Leave a Review</a>' +
-      '<div class="sticky-call" aria-label="Quick actions">' +
-      '<a class="btn btn--primary" href="' +
-      PHONE_TEL +
-      '"><span>Call</span></a>' +
-      '<a class="btn btn--call" href="' +
-      PHONE_SMS +
-      '"><span>Text</span></a>' +
-      '<a class="btn btn--call" href="contact.html?need=Schedule%20Repair"><span>Book</span></a>' +
-      "</div>" +
+      '" target="_blank" rel="noopener" data-cta="review-pill">★ Leave a Review</a>' +
+      buildStickyCall() +
       '<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" hidden>' +
       '<div class="lightbox__inner">' +
       '<button type="button" class="lightbox__close" data-lightbox-close aria-label="Close">&times;</button>' +
@@ -394,6 +480,10 @@
     var shade = hero.querySelector(".hero__shade");
     if (!media) return;
 
+    /* Visual hook: is-parallax disables dual Ken Burns + scroll transform conflict */
+    hero.classList.add("is-parallax");
+    media.style.animation = "none";
+
     var ticking = false;
     function onScroll() {
       if (ticking) return;
@@ -470,7 +560,14 @@
         var hp = form.querySelector('[name="company_website"]');
         if (hp && hp.value) return;
         var success = form.querySelector(".form-success");
-        if (success) success.classList.add("is-visible");
+        if (success) {
+          success.innerHTML = FORM_SUCCESS_HTML;
+          success.classList.add("is-visible");
+        }
+        track("form_submit_success", {
+          form: form.getAttribute("id") || form.getAttribute("name") || "lead",
+          page: currentFile(),
+        });
         form.reset();
       });
     });
@@ -578,7 +675,7 @@
           '</strong><p class="text-muted" style="margin:0.25rem 0 0;font-size:0.9rem">Port St. Lucie &amp; Treasure Coast HVAC — same veteran-led standard.</p></div>' +
           '<a class="btn btn--primary" href="' +
           PHONE_TEL +
-          '">Call for ' +
+          '" data-cta="map-city">Call for ' +
           city +
           "</a>";
       });
@@ -628,23 +725,43 @@
           "</li>" +
           "</ul>";
       }
+      track("wizard_step", { step: step + 1, page: currentFile() });
     }
 
     root.querySelectorAll("[data-choice]").forEach(function (btn) {
+      btn.setAttribute("aria-pressed", "false");
       btn.addEventListener("click", function () {
         var field = btn.getAttribute("data-field");
         var val = btn.getAttribute("data-choice");
         state[field] = val;
         var group = btn.parentElement;
         group.querySelectorAll("[data-choice]").forEach(function (b) {
-          b.classList.toggle("is-selected", b === btn);
+          var on = b === btn;
+          b.classList.toggle("is-selected", on);
+          b.setAttribute("aria-pressed", on ? "true" : "false");
         });
       });
     });
 
     root.querySelectorAll("[data-wizard-next]").forEach(function (btn) {
       btn.addEventListener("click", function () {
-        if (step < panels.length - 1) show(step + 1);
+        if (step >= panels.length - 1) return;
+        var field = WIZARD_STEP_FIELDS[step];
+        if (field && !state[field]) {
+          var choices = panels[step].querySelector(".wizard__choices");
+          if (choices) {
+            choices.style.outline = "2px solid #f08c42";
+            choices.style.outlineOffset = "4px";
+            setTimeout(function () {
+              choices.style.outline = "";
+              choices.style.outlineOffset = "";
+            }, 1200);
+          }
+          btn.setAttribute("aria-invalid", "true");
+          return;
+        }
+        btn.removeAttribute("aria-invalid");
+        show(step + 1);
       });
     });
     root.querySelectorAll("[data-wizard-back]").forEach(function (btn) {
@@ -661,19 +778,28 @@
         if (hp && hp.value) return;
         state.name = form.name.value;
         state.phone = form.phone.value;
-        state.email = form.email.value;
+        state.email = form.email ? form.email.value : "";
         var success = root.querySelector(".form-success");
         if (success) {
           success.classList.add("is-visible");
           success.innerHTML =
-            "Got it, " +
-            state.name +
-            ". Demo captured: <strong>" +
-            state.intent +
-            "</strong> in <strong>" +
-            state.city +
-            "</strong>. In production this tags a GHL opportunity and notifies dispatch — no CAPTCHA, under 60 seconds.";
+            "Got it" +
+            (state.name ? ", " + state.name : "") +
+            ". We&rsquo;ll call you about your " +
+            (state.intent || "estimate") +
+            (state.city ? " in " + state.city : "") +
+            '. Need us sooner? Call <a href="' +
+            PHONE_TEL +
+            '">' +
+            PHONE_DISPLAY +
+            "</a>.";
         }
+        track("form_submit_success", {
+          form: "wizard",
+          intent: state.intent || "",
+          city: state.city || "",
+          page: currentFile(),
+        });
         form.reset();
       });
     }
@@ -769,6 +895,7 @@
     var printBtn = document.querySelector("[data-do-print]");
     if (printBtn) {
       printBtn.addEventListener("click", function () {
+        track("offer_claim", { offer: key, method: "print" });
         window.print();
       });
     }
@@ -791,6 +918,52 @@
           card.style.display = match ? "" : "none";
         });
       });
+    });
+  }
+
+  function bindAnalyticsClicks() {
+    document.addEventListener("click", function (e) {
+      var el = e.target.closest
+        ? e.target.closest("a, button")
+        : null;
+      if (!el) return;
+
+      var href = el.getAttribute("href") || "";
+      var cta = el.getAttribute("data-cta");
+      var isCta =
+        cta ||
+        el.classList.contains("btn") ||
+        el.classList.contains("topbar__phone") ||
+        el.classList.contains("review-pill") ||
+        (el.closest && el.closest(".sticky-call"));
+
+      if (isCta) {
+        track("cta_click", {
+          label: (el.textContent || "").replace(/\s+/g, " ").trim().slice(0, 80),
+          href: href,
+          cta: cta || "",
+          page: currentFile(),
+        });
+      }
+
+      if (href.indexOf("sms:") === 0) {
+        var offerCard = el.closest
+          ? el.closest(".offer-card, [data-offer], [id]")
+          : null;
+        var offerId =
+          (offerCard && offerCard.id) ||
+          (el.getAttribute("data-offer") || "");
+        if (
+          offerId ||
+          (offerCard && offerCard.classList.contains("offer-card"))
+        ) {
+          track("offer_claim", {
+            offer: offerId || "special",
+            method: "sms",
+            page: currentFile(),
+          });
+        }
+      }
     });
   }
 
@@ -817,6 +990,7 @@
     bindCountUp();
     bindPrintCoupon();
     bindBlogFilters();
+    bindAnalyticsClicks();
     exposeOfferSms();
   }
 
