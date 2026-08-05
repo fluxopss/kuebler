@@ -1488,14 +1488,15 @@ address {
 }
 
 /* ---------- Motion ---------- */
-.reveal {
+/* Progressive enhancement: only hide reveals when JS is active */
+.js .reveal {
   opacity: 0;
   transform: translateY(22px);
   transition:
     opacity 0.85s var(--ease),
     transform 0.85s var(--ease);
 }
-.reveal.is-in {
+.js .reveal.is-in {
   opacity: 1;
   transform: none;
 }
@@ -1534,13 +1535,14 @@ address {
     animation: none !important;
     transition: none !important;
   }
-  .reveal,
-  .hero--cinematic .hero__brand,
-  .hero--cinematic .hero__copy,
+  .js .reveal,
+  .js .hero--cinematic .hero__brand,
+  .js .hero--cinematic .hero__copy,
   .hero--cinematic .hero__media img,
-  .quote-beat.is-in .quote-beat__panel {
-    opacity: 1;
-    transform: none;
+  .js .quote-beat.is-in .quote-beat__panel,
+  .js .quote-beat .quote-beat__panel {
+    opacity: 1 !important;
+    transform: none !important;
   }
   .hero--cinematic .hero__media img {
     transform: none !important;
@@ -2428,6 +2430,8 @@ address {
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+.js .hero__brand {
   opacity: 0;
   transform: translateY(16px);
   transition:
@@ -2464,6 +2468,8 @@ address {
 }
 .hero__copy {
   max-width: 18ch;
+}
+.js .hero__copy {
   opacity: 0;
   transform: translateY(22px);
   transition:
@@ -2541,6 +2547,8 @@ address {
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
   gap: clamp(1.25rem, 3vw, 2.5rem);
+}
+.js .quote-beat__panel {
   opacity: 0;
   transform: translateY(28px);
   transition:
@@ -2593,6 +2601,10 @@ address {
   border-radius: 2px;
   overflow: hidden;
   margin-bottom: 1rem;
+}
+.honor-stripe span {
+  display: block;
+  height: 100%;
 }
 .honor-stripe span:nth-child(1) {
   flex: 1;

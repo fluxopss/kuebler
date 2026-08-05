@@ -773,7 +773,8 @@
     window.kueblerSmsOffer = smsOffer;
   }
 
-  document.addEventListener("DOMContentLoaded", function () {
+  function boot() {
+    document.documentElement.classList.add("js");
     mountChrome();
     bindHeader();
     bindReveal();
@@ -791,5 +792,11 @@
     bindPrintCoupon();
     bindBlogFilters();
     exposeOfferSms();
-  });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
+  }
 })();
