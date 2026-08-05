@@ -1,7 +1,7 @@
 # Post-deploy verification for kuebler.fluxlab.agency
 param(
   [string]$BaseUrl = "https://kuebler.fluxlab.agency",
-  [string]$AssetVersion = "elev-20260805d"
+  [string]$AssetVersion = "elev-20260805e"
 )
 
 $ErrorActionPreference = "Stop"
@@ -23,6 +23,9 @@ if ($homePage.StatusCode -ne 200) { Bad "Home status $($homePage.StatusCode)" } 
 
 $html = $homePage.Content
 if ($html -match 'hero--cinematic') { Ok "Cinematic hero markup" } else { Bad "Missing hero--cinematic" }
+if ($html -match 'hero--craft') { Ok "Craft hero markup" } else { Bad "Missing hero--craft" }
+if ($html -match 'service-install\.jpg') { Ok "Craft install hero image" } else { Bad "Hero not using craft install image" }
+if ($html -match 'id="mission"') { Ok "Mission chapter on home" } else { Bad "Missing mission chapter" }
 if ($html -match 'data-quote-beat') { Ok "Quote-beat markup" } else { Bad "Missing data-quote-beat" }
 if ($html -notmatch 'hero--split') { Ok "No split-hero markup" } else { Bad "Old hero--split still present" }
 if ($html -match [regex]::Escape("styles.css?v=$AssetVersion")) { Ok "CSS cache-bust $AssetVersion" } else { Bad "CSS not cache-busted to $AssetVersion" }
@@ -34,13 +37,14 @@ if ($css.StatusCode -ne 200) { Bad "CSS status $($css.StatusCode)" } else { Ok "
 if ($css.Headers['Content-Type'] -match 'text/css') { Ok "CSS Content-Type" } else { Bad "CSS Content-Type: $($css.Headers['Content-Type'])" }
 
 $cssText = $css.Content
-foreach ($needle in @('.quote-beat__panel', '.hero--cinematic', '.honor-stripe', '.js .reveal', '--navy-950: #040b14')) {
+foreach ($needle in @('.quote-beat__panel', '.hero--cinematic', '.hero--craft', '.honor-stripe', '.js .reveal', '.mission-chapter', '--navy-950: #040b14')) {
   if ($cssText.Contains($needle)) { Ok "CSS has $needle" } else { Bad "CSS missing $needle" }
 }
 
 $js = Invoke-WebRequest -Uri "$BaseUrl/assets/js/main.js?v=$AssetVersion" -UseBasicParsing -TimeoutSec 30
 if ($js.Content -match 'classList\.add\("js"\)') { Ok "JS sets html.js" } else { Bad "JS missing html.js boot" }
 if ($js.Content -match 'bindCinematicHero') { Ok "JS cinematic binder" } else { Bad "JS missing bindCinematicHero" }
+if ($js.Content -match 'bindMissionTimeline') { Ok "JS mission timeline binder" } else { Bad "JS missing bindMissionTimeline" }
 
 $about = Invoke-WebRequest -Uri "$BaseUrl/about.html?v=$(Get-Random)" -UseBasicParsing -TimeoutSec 20
 if ($about.Content -match 'honor-timeline') { Ok "About honor timeline" } else { Bad "About missing honor-timeline" }
