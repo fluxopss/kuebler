@@ -66,7 +66,7 @@ foreach ($path in $publicPages) {
     $r = Invoke-WebRequest -Uri "$BaseUrl$path" -UseBasicParsing -TimeoutSec 20
     if ($r.StatusCode -eq 200) { Ok "200 $path" } else { Bad "$path status $($r.StatusCode)" }
   } catch {
-    Bad "$path request failed: $_"
+    Bad ("{0} request failed: {1}" -f $path, $_)
   }
 }
 
@@ -76,7 +76,7 @@ foreach ($path in @("/robots.txt", "/sitemap.xml")) {
     $r = Invoke-WebRequest -Uri "$BaseUrl$path" -UseBasicParsing -TimeoutSec 15
     if ($r.StatusCode -eq 200) { Ok "200 $path" } else { Bad "$path status $($r.StatusCode)" }
   } catch {
-    Bad "$path request failed: $_"
+    Bad ("{0} request failed: {1}" -f $path, $_)
   }
 }
 
@@ -100,7 +100,7 @@ foreach ($path in $samplePaths) {
       Bad "wp-content hotlink on $path"
     }
   } catch {
-    Bad "hotlink scan failed for $path: $_"
+    Bad ("hotlink scan failed for {0}: {1}" -f $path, $_)
   }
 }
 if ($hotlinkHits -eq 0) { Ok "Zero wp-content hotlinks (sampled pages)" }
