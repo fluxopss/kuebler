@@ -2467,7 +2467,7 @@ address {
   color: var(--orange-400);
 }
 .hero__copy {
-  max-width: 18ch;
+  max-width: min(42rem, 100%);
 }
 .js .hero__copy {
   opacity: 0;
@@ -2484,11 +2484,13 @@ address {
   font-size: clamp(2.6rem, 1.4rem + 4.2vw, 5rem);
   max-width: 11ch;
   text-wrap: balance;
+  line-height: 1.05;
 }
 .hero--cinematic .lede {
   max-width: 34rem;
   font-size: var(--text-md);
   color: rgba(230, 237, 243, 0.9);
+  margin-top: 1rem;
 }
 .hero--cinematic .btn-row {
   margin-top: var(--space-6);
