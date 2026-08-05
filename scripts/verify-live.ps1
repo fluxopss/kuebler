@@ -1,7 +1,7 @@
 # Post-deploy verification for kuebler.fluxlab.agency
 param(
   [string]$BaseUrl = "https://kuebler.fluxlab.agency",
-  [string]$AssetVersion = "elev-20260805c"
+  [string]$AssetVersion = "elev-20260805d"
 )
 
 $ErrorActionPreference = "Stop"
