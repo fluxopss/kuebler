@@ -350,6 +350,31 @@
     });
   }
 
+  function bindMissionTimeline() {
+    var timelines = document.querySelectorAll(".honor-timeline");
+    if (!timelines.length) return;
+    if (!("IntersectionObserver" in window) || prefersReducedMotion()) {
+      timelines.forEach(function (tl) {
+        tl.classList.add("is-in");
+      });
+      return;
+    }
+    var io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-in");
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2, rootMargin: "0px 0px -30px 0px" },
+    );
+    timelines.forEach(function (tl) {
+      io.observe(tl);
+    });
+  }
+
   function prefersReducedMotion() {
     return (
       window.matchMedia &&
@@ -778,6 +803,7 @@
     mountChrome();
     bindHeader();
     bindReveal();
+    bindMissionTimeline();
     bindCinematicHero();
     bindQuoteBeat();
     bindTabs();
